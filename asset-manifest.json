@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Yakofenock/RestorationsSiteFrontend-/static/css/main.6d28cc3b.css",
+    "main.js": "/Yakofenock/RestorationsSiteFrontend-/static/js/main.b897679e.js",
+    "index.html": "/Yakofenock/RestorationsSiteFrontend-/index.html",
+    "main.6d28cc3b.css.map": "/Yakofenock/RestorationsSiteFrontend-/static/css/main.6d28cc3b.css.map",
+    "main.b897679e.js.map": "/Yakofenock/RestorationsSiteFrontend-/static/js/main.b897679e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6d28cc3b.css",
+    "static/js/main.b897679e.js"
+  ]
+}
