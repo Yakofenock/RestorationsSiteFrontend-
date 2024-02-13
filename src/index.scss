@@ -55,6 +55,12 @@
   width: 100%;
 }
 
+.card_href, .card_href:hover  {
+  text-decoration: none;
+  color: black;
+  outline: none;
+}
+
 .main-color {
   background-color: #7749F8 !important;
 }

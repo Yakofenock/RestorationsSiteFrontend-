@@ -2,7 +2,7 @@ import React, {FC, useEffect, useState} from "react";
 import Header from "../parts_share/Header";
 import CurrentPath from "../parts/CurrentPath";
 import CatalogCard from '../parts/CatalogCard.tsx';
-import {Col, Row, Button} from "react-bootstrap";
+import {Col, Row, Button, NavDropdown} from "react-bootstrap";
 import useFetch from "../../hooks_and_utils/useFetch";
 import {RestoreAPI} from "../../api";
 import LoadingPopUp from "../popups/LoadingPopUp";
@@ -49,20 +49,21 @@ const Catalog: FC = () => {
     }, [loading, error]);
 
     return (
-        <div className="content">
+        <div className="wrapper clear">
             <LoadingPopUp show={loadingShown} error={error} onClose={handleClose} message={'Идет загрузка...'}/>
             <Header doSearch={handeSearch}/>
             <CurrentPath links={[['Главная', '/info'], ['Каталог', '/catalog']]}/>
-            <div className="container mt-4">
+            <div className="container pt-md-3 pl-md-5 pr-md-5">
                 <div className="row g-4 justify-content-center">
                     {!restorations.length ? <h1>Каталог пуст..</h1> :
-                        <Row className="g-4 justify-content-cente">
-                            {restorations.map((restoration, index) => (
-                                restoration ?
-                                    <Col key={index}>
+                        <Row xs={1} sm={2}  md={3} lg={4} className=" g-4 justify-content-center">
+                            {restorations.map(
+                                (restoration, index) => (
+                                    <Col className="d-flex justify-content-center"  key={index}>
                                         <CatalogCard {...restoration} />
-                                    </Col> : ''
-                            ))}
+                                    </Col>
+                                )
+                            )}
                         </Row>
                     }
                 </div>

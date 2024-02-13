@@ -22,7 +22,7 @@ const Header:FC <HeaderProps> = ({doSearch}) => {
                 <input className="form-control search" value={search} placeholder="Search..."
                        onChange={e => setSearch(e.target.value)}/>
                 <button className="btn btn-outline-light search-button ml-2 mr-2"
-                        onClick={() => doSearch(search)}>Search</button>
+                        onClick={() => doSearch ? doSearch(search): ''}>Search</button>
             </div>
 
             {/* Hamburger Menu */}
@@ -39,7 +39,7 @@ const Header:FC <HeaderProps> = ({doSearch}) => {
                     <div className="btn-group">
                         <button type="button" data-toggle="dropdown"
                                 className="btn btn-light dropdown-toggle hamburger-last">Профиль</button>
-                        <div className="dropdown-menu">
+                        <div className="dropdown-menu dropdown-menu-right dropdown-menu-end">
                             {isAuthenticated && <>
                                 <button className="dropdown-item">Корзина</button>
                                 <button className="dropdown-item">Заказы</button>

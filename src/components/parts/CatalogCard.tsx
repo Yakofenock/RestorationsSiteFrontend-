@@ -15,7 +15,7 @@ const CatalogCard: FC<RestorationType> = ({
                                           total_sum,
                                       }) => {
     return (
-        <Link to={`/restoration/${id}`}>
+        <Link className="card_href" to={`/restoration/${id}`}>
             <div className="card mb-4 ">
                 <div className="text-center">
                     <img
