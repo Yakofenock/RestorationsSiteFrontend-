@@ -1,21 +1,22 @@
-import React, { FC, useEffect, useState } from "react";
+import React, {FC, useEffect, useState} from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import Header from "../parts_share/Header";
 import CurrentPath from "../parts/CurrentPath";
 import useFetch from "../../hooks_and_utils/useFetch";
-import { RestoreAPI } from "../../api";
+import {RestoreAPI} from "../../api";
 import LoadingPopUp from "../popups/LoadingPopUp";
 import imgPlaceholder from "../../hooks_and_utils/imgPlaceholder";
 import percent from "../../hooks_and_utils/countPercent";
 import {RestorationType, DonationType, WorkType} from "../../interfaces";
 import MOCK from "../../MOCK";
+import displayInt from "../../hooks_and_utils/displayInt";
 
 
 const Restoration: FC = () => {
-    const { restore_id } = useParams();
+    const {restore_id} = useParams();
     const restoreId = parseInt(restore_id, 10);
 
-    const [restoration, setRestoration] = useState<RestorationType|any>({});
+    const [restoration, setRestoration] = useState<RestorationType | any>({});
     const [loadingShown, setLoadingShown] = useState<boolean>(false);
 
     const callback = (data: any) => {
@@ -23,9 +24,9 @@ const Restoration: FC = () => {
         setLoadingShown(false);
     };
 
-    const { data, loading, error, doFetch } = useFetch(
+    const {data, loading, error, doFetch} = useFetch(
         `${RestoreAPI}restorations/${restoreId}/`,
-        { method: 'GET' },
+        {method: 'GET'},
         callback
     );
 
@@ -41,7 +42,12 @@ const Restoration: FC = () => {
         if (error) setRestoration(MOCK.restorations_list.find((obj: any) => obj.id === restoreId));
     }, [loading, error]);
 
-        return (
+    return (
+        <div className="wrapper clear">
+            <LoadingPopUp show={loadingShown} error={error} onClose={handleClose} message={'Идет загрузка...'}/>
+            <Header/>
+            <CurrentPath links={[['Главная', '/info'], ['Каталог', '/catalog'], [restoration.name, '']]}/>
+
             <div className="container mt-4">
                 <div className="row justify-content-center">
                     <div className="col-10 col-lg-9">
@@ -57,7 +63,7 @@ const Restoration: FC = () => {
                             <h4 className="d-flex justify-content-between mt-3">
                                 Собрано: {percent(restoration.given_sum, restoration.total_sum)}%,
                                 &nbsp;
-                                {restoration.given_sum} / {restoration.total_sum} ₽
+                                {displayInt(restoration.given_sum)} / {displayInt(restoration.total_sum)} ₽
                                 <Link className="btn btn-primary" to="/catalog">Назад</Link>
                             </h4>
                         </div>
@@ -89,9 +95,6 @@ const Restoration: FC = () => {
                                 </tbody>
 
 
-
-
-
                             </table>
                         </div>
                         <div className="table-responsive mt-4">
@@ -107,24 +110,41 @@ const Restoration: FC = () => {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {restoration.donaters && restoration.donaters.map((donation: DonationType) => (
-                                    <tr key={donation.id}>
-                                        <td>{donation.name}</td>
-                                        <td>{donation.given_sum}</td>
-                                        <td>{donation.total_sum}</td>
-                                        <td className="text-center">{donation.percent}</td>
-                                        <td className="text-center">
-                                            <button className="btn btn-success">Да</button>
-                                        </td>
-                                    </tr>
+                                {restoration.donaters && restoration.donaters.map((donation: DonationType, index: number) => (
+                                    <React.Fragment key={index}>
+                                        {donation.works.map((work, workIndex) => (
+                                            <tr key={`${index}-${workIndex}`}>
+                                                {workIndex === 0 && (
+                                                    <td className="text-center" rowSpan={donation.works.length}>
+                                                        {donation.name}
+                                                    </td>
+                                                )}
+                                                <td>{work.work}</td>
+                                                <td>{work.given_sum}</td>
+                                                <td className="text-center">{work.percent}</td>
+                                                {workIndex === 0 && (
+                                                    <>
+                                                        <td className="text-center" rowSpan={donation.works.length}>
+                                                            {donation.given_sum}
+                                                        </td>
+                                                        <td className="text-center" rowSpan={donation.works.length}>
+                                                            {donation.percent}
+                                                        </td>
+                                                    </>
+                                                )}
+                                            </tr>
+                                        ))}
+                                    </React.Fragment>
                                 ))}
+
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-        );
+        </div>
+    );
 };
 
 
