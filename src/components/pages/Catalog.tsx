@@ -54,7 +54,7 @@ const Catalog: FC = () => {
             <Header doSearch={handeSearch}/>
             <CurrentPath links={[['Главная', '/info'], ['Каталог', '/catalog']]}/>
             <div className="container pt-md-3 pl-md-5 pr-md-5">
-                <div className="row g-4 justify-content-center">
+                {/*<div className="row g-4 justify-content-center">*/}
                     {!restorations.length ? <h1>Каталог пуст..</h1> :
                         <Row xs={1} sm={2}  md={3} lg={4} className=" g-4 justify-content-center">
                             {restorations.map(
@@ -66,7 +66,7 @@ const Catalog: FC = () => {
                             )}
                         </Row>
                     }
-                </div>
+                {/*</div>*/}
             </div>
         </div>
     );
